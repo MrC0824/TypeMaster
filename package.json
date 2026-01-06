@@ -80,8 +80,8 @@
         "portable"
       ],
       "icon": "public/favicon.ico"
-        },
-	  "portable": {
+    },
+    "portable": {
       "artifactName": "${productName}_Portable.${ext}"
     },
     "nsis": {
