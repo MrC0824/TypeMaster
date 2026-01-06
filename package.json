@@ -1,7 +1,7 @@
 {
   "name": "TypeMaster",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeMaster 打字实操练习系统",
   "main": "electron.js",
   "homepage": "./",
@@ -15,7 +15,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "electron:dev": "concurrently \"npm run dev\" \"wait-on tcp:5173 && electron .\"",
-    "electron:build": "pnpm build && pnpm exec electron-builder && node -e \"const fs=require('fs'); const p=['release/builder-debug.yml', 'release/builder-effective-config.yaml']; p.forEach(f=>{try{fs.unlinkSync(f)}catch(e){}});\"",
+    "electron:build": "pnpm run build && electron-builder && node -e \"const fs=require('fs'); const p=['release/builder-debug.yml', 'release/builder-effective-config.yaml']; const d='release/win-unpacked'; p.forEach(f=>{try{fs.unlinkSync(f)}catch(e){}}); try{fs.rmSync(d, {recursive:true, force:true})}catch(e){}\"",
     "release:patch": "pnpm version patch && git push --follow-tags",
     "release:minor": "pnpm version minor && git push --follow-tags",
     "release:major": "pnpm version major && git push --follow-tags",
@@ -71,24 +71,18 @@
       }
     ],
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "public"
     },
     "win": {
-      "icon": "public/favicon.ico",
       "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
+        "nsis",
+        "portable"
+      ],
+      "icon": "public/favicon.ico"
         },
-        {
-          "target": "portable",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
+	  "portable": {
+      "artifactName": "${productName}_Portable.${ext}"
     },
     "nsis": {
       "oneClick": false,
@@ -97,12 +91,7 @@
       "uninstallerIcon": "public/favicon.ico",
       "installerHeaderIcon": "public/favicon.ico",
       "include": "build/installer.nsh",
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "artifactName": "${productName}_Setup.exe"
-    },
-    "portable": {
-      "artifactName": "${productName}_Portable.exe"
+      "artifactName": "${productName}_Setup.${ext}"
     }
   }
 }
