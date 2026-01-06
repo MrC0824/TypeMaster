@@ -1,7 +1,7 @@
 {
   "name": "TypeMaster",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "TypeMaster 打字实操练习系统",
   "main": "electron.js",
   "homepage": "./",
@@ -80,8 +80,8 @@
         "portable"
       ],
       "icon": "public/favicon.ico"
-    },
-    "portable": {
+        },
+	  "portable": {
       "artifactName": "${productName}_Portable.${ext}"
     },
     "nsis": {
